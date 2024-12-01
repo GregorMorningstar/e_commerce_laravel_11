@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="en-US">
-
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <title>Surfside Media</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-    <meta name="author" content="surfside media"/>
-    <!-- CSS Files -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <!-- CSS Links -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/animate.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/animation.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.css') }}">
@@ -14,30 +13,15 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('font/fonts.css') }}">
     <link rel="stylesheet" href="{{ asset('icon/style.css') }}">
+    <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}">
+    <link rel="apple-touch-icon-precomposed" href="{{ asset('images/favicon.ico') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/sweetalert.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/custom.css') }}">
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}">
-    <link rel="apple-touch-icon-precomposed" href="{{ asset('images/favicon.ico') }}">
-    <style>
-        .layout-wrap {
-            display: flex;
-        }
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-        .section-menu-left {
-            width: 250px; /* lub dowolna szerokość */
-            flex-shrink: 0; /* Zapobiega kurczeniu */
-        }
-
-        .section-content-right {
-            flex-grow: 1; /* Wypełnia resztę miejsca */
-        }
-
-    </style>
-    @stack('styles')
+    @stack('styles')  <!-- This is for adding dynamic styles -->
 </head>
-
 <body class="body">
 <div id="wrapper">
     <div id="page" class="">
@@ -48,140 +32,14 @@
     <span></span>
 </div>
 </div> -->
-
-            <div class="section-menu-left">
-                <div class="box-logo">
-                    <a href="index.html" id="site-logo-inner">
-                        <img class="" id="logo_header" alt="" src="images/logo/logo.png"
-                             data-light="images/logo/logo.png" data-dark="images/logo/logo.png">
-                    </a>
-                    <div class="button-show-hide">
-                        <i class="icon-menu-left"></i>
-                    </div>
-                </div>
-                <div class="center">
-                    <div class="center-item">
-                        <div class="center-heading">Main Home</div>
-                        <ul class="menu-list">
-                            <li class="menu-item">
-                                <a href="index.html" class="">
-                                    <div class="icon"><i class="icon-grid"></i></div>
-                                    <div class="text">Dashboard</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="center-item">
-                        <ul class="menu-list">
-                            <li class="menu-item has-children">
-                                <a href="javascript:void(0);" class="menu-item-button">
-                                    <div class="icon"><i class="icon-shopping-cart"></i></div>
-                                    <div class="text">Products</div>
-                                </a>
-                                <ul class="sub-menu">
-                                    <li class="sub-menu-item">
-                                        <a href="add-product.html" class="">
-                                            <div class="text">Add Product</div>
-                                        </a>
-                                    </li>
-                                    <li class="sub-menu-item">
-                                        <a href="products.html" class="">
-                                            <div class="text">Products</div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="menu-item has-children">
-                                <a href="javascript:void(0);" class="menu-item-button">
-                                    <div class="icon"><i class="icon-layers"></i></div>
-                                    <div class="text">Brand</div>
-                                </a>
-                                <ul class="sub-menu">
-                                    <li class="sub-menu-item">
-                                        <a href="add-brand.html" class="">
-                                            <div class="text">New Brand</div>
-                                        </a>
-                                    </li>
-                                    <li class="sub-menu-item">
-                                        <a href="brands.html" class="">
-                                            <div class="text">Brands</div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="menu-item has-children">
-                                <a href="javascript:void(0);" class="menu-item-button">
-                                    <div class="icon"><i class="icon-layers"></i></div>
-                                    <div class="text">Category</div>
-                                </a>
-                                <ul class="sub-menu">
-                                    <li class="sub-menu-item">
-                                        <a href="add-category.html" class="">
-                                            <div class="text">New Category</div>
-                                        </a>
-                                    </li>
-                                    <li class="sub-menu-item">
-                                        <a href="categories.html" class="">
-                                            <div class="text">Categories</div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-
-                            <li class="menu-item has-children">
-                                <a href="javascript:void(0);" class="menu-item-button">
-                                    <div class="icon"><i class="icon-file-plus"></i></div>
-                                    <div class="text">Order</div>
-                                </a>
-                                <ul class="sub-menu">
-                                    <li class="sub-menu-item">
-                                        <a href="orders.html" class="">
-                                            <div class="text">Orders</div>
-                                        </a>
-                                    </li>
-                                    <li class="sub-menu-item">
-                                        <a href="order-tracking.html" class="">
-                                            <div class="text">Order tracking</div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="menu-item">
-                                <a href="slider.html" class="">
-                                    <div class="icon"><i class="icon-image"></i></div>
-                                    <div class="text">Slider</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="coupons.html" class="">
-                                    <div class="icon"><i class="icon-grid"></i></div>
-                                    <div class="text">Coupns</div>
-                                </a>
-                            </li>
-
-                            <li class="menu-item">
-                                <a href="users.html" class="">
-                                    <div class="icon"><i class="icon-user"></i></div>
-                                    <div class="text">User</div>
-                                </a>
-                            </li>
-
-                            <li class="menu-item">
-                                <a href="settings.html" class="">
-                                    <div class="icon"><i class="icon-settings"></i></div>
-                                    <div class="text">Settings</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            {{----left navigation for admin----}}
+            @include('admin.nav._left_nav')
             <div class="section-content-right">
 
                 <div class="header-dashboard">
                     <div class="wrap">
                         <div class="header-left">
-                            <a href="index-2.html">
+                            <a href="{{route('admin.index')}}">
                                 <img class="" id="logo_header_mobile" alt="" src="images/logo/logo.png"
                                      data-light="images/logo/logo.png" data-dark="images/logo/logo.png"
                                      data-width="154px" data-height="52px" data-retina="images/logo/logo.png">
@@ -458,9 +316,7 @@
                     </div>
                 </div>
                 <div class="main-content">
-                    <div>
-                        @yield('content')
-                    </div>
+                    @yield('content')
 
 
                     <div class="bottom-page">
@@ -473,7 +329,6 @@
     </div>
 </div>
 
-<!-- JavaScript Files -->
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
@@ -584,8 +439,6 @@
     })(jQuery);
 </script>
 @stack('script')
-
 </body>
-
 
 </html>

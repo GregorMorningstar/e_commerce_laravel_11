@@ -1,12 +1,25 @@
-@extends('layouts.app')
+@extends('layouts.user')
 
 @section('content')
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-        @csrf
-    </form>
+    <main class="pt-90">
+        <div class="mb-4 pb-4"></div>
+        <section class="my-account container">
+            <h2 class="page-title">My Account</h2>
+            <div class="row">
+                @include('user.nav._left_nav')
+                <div class="col-lg-9">
+                    <div class="page-content my-account__dashboard">
+                        <p>Hello <strong>User</strong></p>
+                        <p>From your account dashboard you can view your <a class="unerline-link"
+                                                                            href="account_orders.html">recent
+                                orders</a>, manage your <a class="unerline-link" href="account_edit_address.html">shipping
+                                addresses</a>, and <a class="unerline-link" href="account_edit.html">edit your password
+                                and account
+                                details.</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-    <a href="{{ route('logout') }}"
-       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-        Logout
-    </a>
 @endsection
