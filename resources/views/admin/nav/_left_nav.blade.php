@@ -18,6 +18,12 @@
                         <div class="text">Dashboard</div>
                     </a>
                 </li>
+                <li class="menu-item">
+                    <a href="{{route('home.index')}}" class="">
+                        <div class="icon"><i class="icon-shopping-bag"></i></div>
+                        <div class="text">Sklep</div>
+                    </a>
+                </li>
             </ul>
         </div>
         <div class="center-item">
@@ -28,6 +34,7 @@
                         <div class="text">Products</div>
                     </a>
                     <ul class="sub-menu">
+
                         <li class="sub-menu-item">
                             <a href="add-product.html" class="">
                                 <div class="text">Add Product</div>
