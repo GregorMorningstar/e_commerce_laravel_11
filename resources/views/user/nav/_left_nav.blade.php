@@ -1,6 +1,6 @@
 <div class="col-lg-3">
     <ul class="account-nav">
-        <li><a href="{{route('home.index')}}" class="menu-link menu-link_us-s">Sklep</a></li>
+        <li><a href="{{route('home.index')}}" class="menu-link menu-link_us-s">Sklepphp</a></li>
         <li><a href="{{route('user.index')}}" class="menu-link menu-link_us-s">Dashboard</a></li>
         <li><a href="account-orders.html" class="menu-link menu-link_us-s">Orders</a></li>
         <li><a href="account-address.html" class="menu-link menu-link_us-s">Addresses</a></li>
