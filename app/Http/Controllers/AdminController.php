@@ -30,9 +30,10 @@ class AdminController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|unique:brands,slug',
-            'image' => 'mimes:png,jpg,jpeg|max:2048',
+            'slug' => 'required|string|unique:brands,slug|max:255',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
+
 
         $brand = new Brand();
         $brand->name = $request->name;
@@ -51,6 +52,6 @@ class AdminController extends Controller
 
         $brand->save();
 
-        return redirect()->route('admin.brands');
+        return redirect()->route('admin.brands')->with('status', 'Brand successfully added.');
     }
 }
