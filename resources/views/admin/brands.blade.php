@@ -38,6 +38,21 @@
                 </div>
                 <div class="wg-table table-all-user">
                     <div class="table-responsive">
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                            @if (session('error'))
+                                <div class="alert alert-danger">
+                                    {{ session('error') }}
+                                </div>
+                            @endif
+                            @if (session('info'))
+                                <div class="alert alert-info">
+                                    {{ session('info') }}
+                                </div>
+                            @endif
                         <table class="table table-striped table-bordered">
                             <thead>
                             <tr>
@@ -65,15 +80,15 @@
                                     <td><a href="#" target="_blank">0</a></td>
                                     <td>
                                         <div class="list-icon-function">
-                                            <a href="#">
+                                            <a href="{{route('admin.edit_brand', ['id' => $item->id])}}">
                                                 <div class="item edit">
                                                     <i class="icon-edit-3"></i>
                                                 </div>
                                             </a>
-                                            <form action="#" method="POST">
-                                                <div class="item text-danger delete">
-                                                    <i class="icon-trash-2"></i>
-                                                </div>
+                                            <form action="{{ route('admin.brand.delete', $item->id) }}" method="POST" onsubmit="return confirm('Czy na pewno chcesz usunąć tę markę?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">    <i class="icon-trash-2"></i></button>
                                             </form>
                                         </div>
                                     </td>
