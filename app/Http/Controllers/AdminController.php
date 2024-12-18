@@ -8,6 +8,7 @@ use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class AdminController extends Controller
@@ -214,7 +215,6 @@ class AdminController extends Controller
         $products = Product::paginate(10);
         return view('admin.products',compact('products'));
 }
-
     public function product_store(Request $request)
     {
         // Walidacja danych
@@ -268,4 +268,111 @@ class AdminController extends Controller
         $brands = Brand::all(); // If you want to pass brands as well
         return view('admin.add_products',compact('categories', 'brands'));
 }
+
+    public function product_edit($id)
+    {
+        $categories = Category::all(); // Or any other logic to get categories
+        $brands = Brand::all(); // If you want to pass brands as well
+        $product_edit = Product::findOrFail($id);
+return view('admin.edit_products',compact('product_edit','categories', 'brands'));
+    }
+
+    public function products_update(Request $request)
+    {
+
+        // Walidacja danych
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'slug' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'brand_id' => 'required|exists:brands,id',
+            'short_description' => 'required|string',
+            'description' => 'required|string',
+            'regular_price' => 'required|numeric',
+            'sale_price' => 'required|numeric',
+            'SKU' => 'required|string|max:255',
+            'quantity' => 'required|integer',
+            'stock_status' => 'required|string',
+            'featured' => 'required|boolean',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Walidacja obrazu
+            'images' => 'nullable|array', // Tablica z dodatkowymi obrazkami
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Walidacja obrazków w galerii
+        ]);
+
+$id = $request->input('id');
+        // Znalezienie produktu w bazie
+        $product = Product::findOrFail($id);
+//dd($product."<br>".$id);
+        // Aktualizacja danych produktu
+        $product->name = $validatedData['name'];
+        $product->slug = $validatedData['slug'];
+        $product->category_id = $validatedData['category_id'];
+        $product->brand_id = $validatedData['brand_id'];
+        $product->short_description = $validatedData['short_description'];
+        $product->description = $validatedData['description'];
+        $product->regular_price = $validatedData['regular_price'];
+        $product->sale_price = $validatedData['sale_price'];
+        $product->SKU = $validatedData['SKU'];
+        $product->quantity = $validatedData['quantity'];
+        $product->stock_status = $validatedData['stock_status'];
+        $product->featured = $validatedData['featured'];
+
+        // Obsługa głównego obrazu produktu
+        if ($request->hasFile('image')) {
+            // Usuń stary obrazek (jeśli istnieje)
+            if ($product->image) {
+                Storage::delete('public/' . $product->image);
+            }
+
+            // Zapisz nowy obrazek
+            $imagePath = $request->file('image')->store('products', 'public');
+            $product->image = $imagePath;
+        }
+
+        // Obsługa obrazków w galerii
+        if ($request->hasFile('images')) {
+            // Usuń stare obrazki z galerii
+            if ($product->images) {
+                $oldImages = json_decode($product->images);
+                foreach ($oldImages as $image) {
+                    Storage::delete('public/' . $image);
+                }
+            }
+
+            // Zapisz nowe obrazki
+            $galleryImages = [];
+            foreach ($request->file('images') as $image) {
+                $imagePath = $image->store('products/gallery', 'public');
+                $galleryImages[] = $imagePath;
+            }
+            $product->images = json_encode($galleryImages); // Zapisać obrazy jako tablicę JSON
+        }
+
+        // Zapisz zaktualizowany produkt
+        $product->save();
+
+        // Przekierowanie z komunikatem o sukcesie
+        return redirect()->route('admin.products')->with('success', 'Product updated successfully!');
+    }
+
+    public function products_delete($id)
+    {
+        $delete_products = Product::findOrFail($id);
+        //usuwanie pliku przy delete marki
+        try {
+            if (File::exists(public_path('uploads/products/' . $delete_products->image))) {
+                File::delete(public_path('uploads/products/' . $delete_products->image));
+            }
+            else if (File::exists(public_path('uploads/products/gallery' . $delete_products->image))) {
+                File::delete(public_path('uploads/products//gallery' . $delete_products->image));
+            }
+
+
+            $delete_products->delete();
+            return redirect()->route('admin.products')->with('success', 'Produkt została usunięta.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.products')->with('error', 'Wystąpił błąd: ' . $e->getMessage());
+        }
+    }
+
 }

@@ -96,16 +96,23 @@
                                                 <i class="icon-eye"></i>
                                             </div>
                                         </a>
-                                        <a href="#" class="mr-2"> <!-- Ustawienie marginesu po prawej -->
+                                        <a href="{{route('admin.edit_products',['id' => $product->id])}}" class="mr-2"> <!-- Ustawienie marginesu po prawej -->
                                             <div class="item edit">
                                                 <i class="icon-edit-3"></i>
                                             </div>
                                         </a>
-                                        <form action="#" method="POST">
-                                            <div class="item text-danger delete">
+
+
+                                        <form action="{{ route('admin.delete_product', $product->id) }}" method="POST" onsubmit="return confirm('Czy na pewno chcesz usunąć ten produkt?');">
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button type="submit" class="btn btn-danger">
                                                 <i class="icon-trash-2"></i>
-                                            </div>
+                                            </button>
                                         </form>
+
+
                                     </div>
                                 </td>
 
