@@ -56,7 +56,7 @@
                             <tr>
                                 <td>
                                     <div class="shopping-cart__product-item">
-                                        <img loading="lazy" src="{{asset('uploads/products/thumbnails')}}/{{$item->model->image}}" width="120" height="120" alt="{{$item->name}}" />
+                                        <img src="{{ asset('storage/' .$item->options->image) }}" alt="{{ $item->name }}" class="cart-item-image" style="width: 100px; height: auto;">
                                     </div>
                                 </td>
                                 <td>
