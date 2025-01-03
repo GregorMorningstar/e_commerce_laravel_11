@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\User;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -18,9 +19,12 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
+        // Przykład seeda dla kategorii i marki
+        \App\Models\Category::factory(9)->create();
+        \App\Models\Brand::factory(9)->create();
 
-        Brand::factory()->count(10)->create();
-        Category::factory()->count(10)->create();
+        // Produkty powinny być tworzone po utworzeniu kategorii i marki
+        \App\Models\Product::factory(50)->create();
 
     }
 }

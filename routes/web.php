@@ -17,6 +17,10 @@ Route::get('/cart',[CartController::class,'index'])->name('cart.index');
 Route::post('/cart/add',[CartController::class,'add_to_cart'])->name('cart.add');
 Route::put('/cart/increase-quantity/{rowId}',[CartController::class,'increase_cart_quantity'])->name('cart.increase_quantity');
 Route::put('/cart/decrease-quantity/{rowId}',[CartController::class,'decrease_cart_quantity'])->name('cart.decrease_quantity');
+Route::delete('/cart/remove/{rowId}',[CartController::class,'remove_item'])->name('cart.remove');
+Route::delete('/cart/clear',[CartController::class,'clear_cart'])->name('cart.clear');
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

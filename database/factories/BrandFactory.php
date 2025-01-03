@@ -19,8 +19,11 @@ class BrandFactory extends Factory
      */
     public function definition(): array
     {
-        // Generowanie losowej nazwy marki z Fakera
-        $brand_name = $this->faker->unique()->company(); // Możesz zmienić na `word()` lub `sentence(1)` dla innych stylów
+        // Licznik globalny dla generatora (można też przenieść do konstruktora klasy)
+        static $counter = 1;
+
+        // Generowanie nazwy "brand1", "brand2", itd.
+        $brand_name = "brand" . $counter++;
 
         // Generowanie nazwy pliku dla obrazu
         $file_name = Carbon::now()->timestamp . '_' . Str::slug($brand_name) . '.jpg';
@@ -28,12 +31,12 @@ class BrandFactory extends Factory
         // Ścieżka do zapisu obrazu
         $image_path = 'uploads/brand/' . $file_name;
 
-        // Tworzenie fikcyjnego obrazu
+        // Tworzenie fikcyjnego obrazu (opcjonalnie)
         $fakeImageContent = $this->generateFakeImage();
         Storage::disk('public')->put($image_path, $fakeImageContent);
 
         return [
-            'name' => $brand_name,
+            'name' => $brand_name, // Zmieniona nazwa na "brandX"
             'slug' => Str::slug($brand_name),
             'image' => $file_name, // Tylko nazwa pliku bez ścieżki
         ];

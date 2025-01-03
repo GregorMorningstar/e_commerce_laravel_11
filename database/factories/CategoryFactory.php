@@ -19,8 +19,11 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
-        // Generowanie losowej nazwy kategorii z Fakera
-        $category_name = $this->faker->unique()->word(); // Możesz zmienić na `sentence(2)` dla bardziej złożonych nazw
+        // Licznik globalny dla generatora kategorii
+        static $counter = 1;
+
+        // Generowanie nazwy "category1", "category2", itd.
+        $category_name = "category" . $counter++;
 
         // Generowanie nazwy pliku dla obrazu
         $file_name = Carbon::now()->timestamp . '_' . Str::slug($category_name) . '.jpg';
@@ -33,7 +36,7 @@ class CategoryFactory extends Factory
         Storage::disk('public')->put($image_path, $fakeImageContent);
 
         return [
-            'name' => $category_name,
+            'name' => $category_name, // Zmieniona nazwa na "categoryX"
             'slug' => Str::slug($category_name),
             'image' => $file_name, // Tylko nazwa pliku bez ścieżki
         ];
